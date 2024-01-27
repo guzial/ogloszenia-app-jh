@@ -1,0 +1,194 @@
+<div>
+  <h2 id="page-heading" data-cy="OgloszenieHeading">
+    <span jhiTranslate="ogloszeniaApp.ogloszenie.home.title">Ogloszenie</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="ogloszeniaApp.ogloszenie.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-ogloszenie"
+        [routerLink]="['/ogloszenie/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="ogloszeniaApp.ogloszenie.home.createLabel">Dodaj Ogloszenie</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (ogloszenies?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="ogloszeniaApp.ogloszenie.home.notFound">No Ogloszenies found</span>
+    </div>
+  }
+
+  @if (ogloszenies && ogloszenies.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="tytul">
+              <div class="d-flex">
+                <span jhiTranslate="ogloszeniaApp.ogloszenie.tytul">Tytul</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="opis">
+              <div class="d-flex">
+                <span jhiTranslate="ogloszeniaApp.ogloszenie.opis">Opis</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dataPublikacji">
+              <div class="d-flex">
+                <span jhiTranslate="ogloszeniaApp.ogloszenie.dataPublikacji">Data Publikacji</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dataWaznosci">
+              <div class="d-flex">
+                <span jhiTranslate="ogloszeniaApp.ogloszenie.dataWaznosci">Data Waznosci</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="startOd">
+              <div class="d-flex">
+                <span jhiTranslate="ogloszeniaApp.ogloszenie.startOd">Start Od</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="czyWidelki">
+              <div class="d-flex">
+                <span jhiTranslate="ogloszeniaApp.ogloszenie.czyWidelki">Czy Widelki</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="widelkiMin">
+              <div class="d-flex">
+                <span jhiTranslate="ogloszeniaApp.ogloszenie.widelkiMin">Widelki Min</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="widelkiMax">
+              <div class="d-flex">
+                <span jhiTranslate="ogloszeniaApp.ogloszenie.widelkiMax">Widelki Max</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="aktywne">
+              <div class="d-flex">
+                <span jhiTranslate="ogloszeniaApp.ogloszenie.aktywne">Aktywne</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="seniority.nazwa">
+              <div class="d-flex">
+                <span jhiTranslate="ogloszeniaApp.ogloszenie.seniority">Seniority</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="typUmowy.tekst">
+              <div class="d-flex">
+                <span jhiTranslate="ogloszeniaApp.ogloszenie.typUmowy">Typ Umowy</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="wystawca.id">
+              <div class="d-flex">
+                <span jhiTranslate="ogloszeniaApp.ogloszenie.wystawca">Wystawca</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody
+          infinite-scroll
+          (scrolled)="loadPage(page + 1)"
+          [infiniteScrollDisabled]="page - 1 >= links['last']"
+          [infiniteScrollDistance]="0"
+        >
+          @for (ogloszenie of ogloszenies; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/ogloszenie', ogloszenie.id, 'view']">{{ ogloszenie.id }}</a>
+              </td>
+              <td>{{ ogloszenie.tytul }}</td>
+              <td>{{ ogloszenie.opis }}</td>
+              <td>{{ ogloszenie.dataPublikacji | formatMediumDatetime }}</td>
+              <td>{{ ogloszenie.dataWaznosci | formatMediumDatetime }}</td>
+              <td>{{ ogloszenie.startOd | formatMediumDatetime }}</td>
+              <td>{{ ogloszenie.czyWidelki }}</td>
+              <td>{{ ogloszenie.widelkiMin }}</td>
+              <td>{{ ogloszenie.widelkiMax }}</td>
+              <td>{{ ogloszenie.aktywne }}</td>
+              <td>
+                @if (ogloszenie.seniority) {
+                  <div>
+                    <a [routerLink]="['/seniority', ogloszenie.seniority.id, 'view']">{{ ogloszenie.seniority.nazwa }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (ogloszenie.typUmowy) {
+                  <div>
+                    <a [routerLink]="['/typ-umowy', ogloszenie.typUmowy.id, 'view']">{{ ogloszenie.typUmowy.tekst }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (ogloszenie.wystawca) {
+                  <div>
+                    <a [routerLink]="['/wystawca', ogloszenie.wystawca.id, 'view']">{{ ogloszenie.wystawca.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/ogloszenie', ogloszenie.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Widok</span>
+                  </a>
+
+                  <a [routerLink]="['/ogloszenie', ogloszenie.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edytuj</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(ogloszenie)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Usuń</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

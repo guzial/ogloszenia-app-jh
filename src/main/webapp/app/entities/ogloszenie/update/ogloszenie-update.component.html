@@ -1,0 +1,189 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-ogloszenie-heading"
+        data-cy="OgloszenieCreateUpdateHeading"
+        jhiTranslate="ogloszeniaApp.ogloszenie.home.createOrEditLabel"
+      >
+        Dodaj lub edytuj: Ogloszenie
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="ogloszeniaApp.ogloszenie.tytul" for="field_tytul">Tytul</label>
+          <input type="text" class="form-control" name="tytul" id="field_tytul" data-cy="tytul" formControlName="tytul" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="ogloszeniaApp.ogloszenie.opis" for="field_opis">Opis</label>
+          <input type="text" class="form-control" name="opis" id="field_opis" data-cy="opis" formControlName="opis" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="ogloszeniaApp.ogloszenie.dataPublikacji" for="field_dataPublikacji"
+            >Data Publikacji</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_dataPublikacji"
+              data-cy="dataPublikacji"
+              type="datetime-local"
+              class="form-control"
+              name="dataPublikacji"
+              formControlName="dataPublikacji"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="ogloszeniaApp.ogloszenie.dataWaznosci" for="field_dataWaznosci">Data Waznosci</label>
+          <div class="d-flex">
+            <input
+              id="field_dataWaznosci"
+              data-cy="dataWaznosci"
+              type="datetime-local"
+              class="form-control"
+              name="dataWaznosci"
+              formControlName="dataWaznosci"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="ogloszeniaApp.ogloszenie.startOd" for="field_startOd">Start Od</label>
+          <div class="d-flex">
+            <input
+              id="field_startOd"
+              data-cy="startOd"
+              type="datetime-local"
+              class="form-control"
+              name="startOd"
+              formControlName="startOd"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="ogloszeniaApp.ogloszenie.czyWidelki" for="field_czyWidelki">Czy Widelki</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="czyWidelki"
+            id="field_czyWidelki"
+            data-cy="czyWidelki"
+            formControlName="czyWidelki"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="ogloszeniaApp.ogloszenie.widelkiMin" for="field_widelkiMin">Widelki Min</label>
+          <input
+            type="number"
+            class="form-control"
+            name="widelkiMin"
+            id="field_widelkiMin"
+            data-cy="widelkiMin"
+            formControlName="widelkiMin"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="ogloszeniaApp.ogloszenie.widelkiMax" for="field_widelkiMax">Widelki Max</label>
+          <input
+            type="number"
+            class="form-control"
+            name="widelkiMax"
+            id="field_widelkiMax"
+            data-cy="widelkiMax"
+            formControlName="widelkiMax"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="ogloszeniaApp.ogloszenie.aktywne" for="field_aktywne">Aktywne</label>
+          <input type="checkbox" class="form-check" name="aktywne" id="field_aktywne" data-cy="aktywne" formControlName="aktywne" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="ogloszeniaApp.ogloszenie.seniority" for="field_seniority">Seniority</label>
+          <select
+            class="form-control"
+            id="field_seniority"
+            data-cy="seniority"
+            name="seniority"
+            formControlName="seniority"
+            [compareWith]="compareSeniority"
+          >
+            <option [ngValue]="null"></option>
+            @for (seniorityOption of senioritiesCollection; track $index) {
+              <option [ngValue]="seniorityOption">{{ seniorityOption.nazwa }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="ogloszeniaApp.ogloszenie.typUmowy" for="field_typUmowy">Typ Umowy</label>
+          <select
+            class="form-control"
+            id="field_typUmowy"
+            data-cy="typUmowy"
+            name="typUmowy"
+            formControlName="typUmowy"
+            [compareWith]="compareTypUmowy"
+          >
+            <option [ngValue]="null"></option>
+            @for (typUmowyOption of typUmowiesCollection; track $index) {
+              <option [ngValue]="typUmowyOption">{{ typUmowyOption.tekst }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="ogloszeniaApp.ogloszenie.wystawca" for="field_wystawca">Wystawca</label>
+          <select
+            class="form-control"
+            id="field_wystawca"
+            data-cy="wystawca"
+            name="wystawca"
+            formControlName="wystawca"
+            [compareWith]="compareWystawca"
+          >
+            <option [ngValue]="null"></option>
+            @for (wystawcaOption of wystawcasSharedCollection; track $index) {
+              <option [ngValue]="wystawcaOption">{{ wystawcaOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Anuluj</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Zapisz</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
