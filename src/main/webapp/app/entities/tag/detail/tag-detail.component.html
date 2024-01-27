@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (tag) {
+      <div>
+        <h2 data-cy="tagDetailsHeading"><span jhiTranslate="ogloszeniaApp.tag.detail.title">Tag</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ tag.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="ogloszeniaApp.tag.tekst">Tekst</span></dt>
+          <dd>
+            <span>{{ tag.tekst }}</span>
+          </dd>
+          <dt><span jhiTranslate="ogloszeniaApp.tag.grupaTagow">Grupa Tagow</span></dt>
+          <dd>
+            @if (tag.grupaTagow) {
+              <div>
+                <a [routerLink]="['/grupa-tagow', tag.grupaTagow.id, 'view']">{{ tag.grupaTagow.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="ogloszeniaApp.tag.ogloszenie">Ogloszenie</span></dt>
+          <dd>
+            @if (tag.ogloszenie) {
+              <div>
+                <a [routerLink]="['/ogloszenie', tag.ogloszenie.id, 'view']">{{ tag.ogloszenie.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Wstecz</span>
+        </button>
+
+        <button type="button" [routerLink]="['/tag', tag.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edytuj</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,90 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (ogloszenie) {
+      <div>
+        <h2 data-cy="ogloszenieDetailsHeading"><span jhiTranslate="ogloszeniaApp.ogloszenie.detail.title">Ogloszenie</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ ogloszenie.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="ogloszeniaApp.ogloszenie.tytul">Tytul</span></dt>
+          <dd>
+            <span>{{ ogloszenie.tytul }}</span>
+          </dd>
+          <dt><span jhiTranslate="ogloszeniaApp.ogloszenie.opis">Opis</span></dt>
+          <dd>
+            <span>{{ ogloszenie.opis }}</span>
+          </dd>
+          <dt><span jhiTranslate="ogloszeniaApp.ogloszenie.dataPublikacji">Data Publikacji</span></dt>
+          <dd>
+            <span>{{ ogloszenie.dataPublikacji | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="ogloszeniaApp.ogloszenie.dataWaznosci">Data Waznosci</span></dt>
+          <dd>
+            <span>{{ ogloszenie.dataWaznosci | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="ogloszeniaApp.ogloszenie.startOd">Start Od</span></dt>
+          <dd>
+            <span>{{ ogloszenie.startOd | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="ogloszeniaApp.ogloszenie.czyWidelki">Czy Widelki</span></dt>
+          <dd>
+            <span>{{ ogloszenie.czyWidelki }}</span>
+          </dd>
+          <dt><span jhiTranslate="ogloszeniaApp.ogloszenie.widelkiMin">Widelki Min</span></dt>
+          <dd>
+            <span>{{ ogloszenie.widelkiMin }}</span>
+          </dd>
+          <dt><span jhiTranslate="ogloszeniaApp.ogloszenie.widelkiMax">Widelki Max</span></dt>
+          <dd>
+            <span>{{ ogloszenie.widelkiMax }}</span>
+          </dd>
+          <dt><span jhiTranslate="ogloszeniaApp.ogloszenie.aktywne">Aktywne</span></dt>
+          <dd>
+            <span>{{ ogloszenie.aktywne }}</span>
+          </dd>
+          <dt><span jhiTranslate="ogloszeniaApp.ogloszenie.seniority">Seniority</span></dt>
+          <dd>
+            @if (ogloszenie.seniority) {
+              <div>
+                <a [routerLink]="['/seniority', ogloszenie.seniority.id, 'view']">{{ ogloszenie.seniority.nazwa }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="ogloszeniaApp.ogloszenie.typUmowy">Typ Umowy</span></dt>
+          <dd>
+            @if (ogloszenie.typUmowy) {
+              <div>
+                <a [routerLink]="['/typ-umowy', ogloszenie.typUmowy.id, 'view']">{{ ogloszenie.typUmowy.tekst }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="ogloszeniaApp.ogloszenie.wystawca">Wystawca</span></dt>
+          <dd>
+            @if (ogloszenie.wystawca) {
+              <div>
+                <a [routerLink]="['/wystawca', ogloszenie.wystawca.id, 'view']">{{ ogloszenie.wystawca.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Wstecz</span>
+        </button>
+
+        <button type="button" [routerLink]="['/ogloszenie', ogloszenie.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edytuj</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

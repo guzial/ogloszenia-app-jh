@@ -1,0 +1,23 @@
+{
+  "annotations": {
+    "changelogDate": "20240127204049"
+  },
+  "applications": "*",
+  "entityTableName": "tag",
+  "fields": [
+    {
+      "fieldName": "tekst",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Tag",
+  "relationships": [
+    {
+      "otherEntityName": "grupaTagow",
+      "relationshipName": "grupaTagow",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "searchEngine": "no"
+}

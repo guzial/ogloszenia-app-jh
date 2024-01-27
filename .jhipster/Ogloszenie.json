@@ -1,0 +1,71 @@
+{
+  "annotations": {
+    "changelogDate": "20240127203849"
+  },
+  "applications": "*",
+  "entityTableName": "ogloszenie",
+  "fields": [
+    {
+      "fieldName": "tytul",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "opis",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dataPublikacji",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "dataWaznosci",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "startOd",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "czyWidelki",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "widelkiMin",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "widelkiMax",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "aktywne",
+      "fieldType": "Boolean"
+    }
+  ],
+  "name": "Ogloszenie",
+  "pagination": "infinite-scroll",
+  "relationships": [
+    {
+      "otherEntityField": "nazwa",
+      "otherEntityName": "seniority",
+      "relationshipName": "seniority",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityField": "tekst",
+      "otherEntityName": "typUmowy",
+      "relationshipName": "typUmowy",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityField": "tekst",
+      "otherEntityName": "tag",
+      "relationshipName": "tagi",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no"
+}
