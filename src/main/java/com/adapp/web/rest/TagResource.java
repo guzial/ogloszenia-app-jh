@@ -136,12 +136,17 @@ public class TagResource {
     /**
      * {@code GET  /tags} : get all the tags.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tags in body.
      */
     @GetMapping("")
-    public List<Tag> getAllTags() {
+    public List<Tag> getAllTags(@RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload) {
         log.debug("REST request to get all Tags");
-        return tagRepository.findAll();
+        if (eagerload) {
+            return tagRepository.findAllWithEagerRelationships();
+        } else {
+            return tagRepository.findAll();
+        }
     }
 
     /**
@@ -153,7 +158,7 @@ public class TagResource {
     @GetMapping("/{id}")
     public ResponseEntity<Tag> getTag(@PathVariable("id") Long id) {
         log.debug("REST request to get Tag : {}", id);
-        Optional<Tag> tag = tagRepository.findById(id);
+        Optional<Tag> tag = tagRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(tag);
     }
 

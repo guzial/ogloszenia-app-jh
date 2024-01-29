@@ -32,7 +32,7 @@
           >
             <option [ngValue]="null"></option>
             @for (grupaTagowOption of grupaTagowsCollection; track $index) {
-              <option [ngValue]="grupaTagowOption">{{ grupaTagowOption.id }}</option>
+              <option [ngValue]="grupaTagowOption">{{ grupaTagowOption.nazwaGrupy }}</option>
             }
           </select>
         </div>
