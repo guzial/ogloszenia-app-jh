@@ -13,6 +13,7 @@
   "name": "Tag",
   "relationships": [
     {
+      "otherEntityField": "nazwaGrupy",
       "otherEntityName": "grupaTagow",
       "relationshipName": "grupaTagow",
       "relationshipSide": "left",
