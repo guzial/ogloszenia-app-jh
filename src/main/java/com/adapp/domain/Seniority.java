@@ -26,7 +26,7 @@ public class Seniority implements Serializable {
     @Column(name = "nazwa")
     private String nazwa;
 
-    @JsonIgnoreProperties(value = { "seniority", "typUmowy", "tagis", "wystawca" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "seniority", "typUmowy", "wystawca", "tags" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "seniority")
     private Ogloszenie ogloszenie;
 

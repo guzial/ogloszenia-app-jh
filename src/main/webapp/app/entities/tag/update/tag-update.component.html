@@ -36,23 +36,6 @@
             }
           </select>
         </div>
-
-        <div class="mb-3">
-          <label class="form-label" jhiTranslate="ogloszeniaApp.tag.ogloszenie" for="field_ogloszenie">Ogloszenie</label>
-          <select
-            class="form-control"
-            id="field_ogloszenie"
-            data-cy="ogloszenie"
-            name="ogloszenie"
-            formControlName="ogloszenie"
-            [compareWith]="compareOgloszenie"
-          >
-            <option [ngValue]="null"></option>
-            @for (ogloszenieOption of ogloszeniesSharedCollection; track $index) {
-              <option [ngValue]="ogloszenieOption">{{ ogloszenieOption.id }}</option>
-            }
-          </select>
-        </div>
       </div>
 
       <div>

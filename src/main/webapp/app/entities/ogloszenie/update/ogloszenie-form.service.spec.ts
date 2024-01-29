@@ -32,6 +32,7 @@ describe('Ogloszenie Form Service', () => {
             seniority: expect.any(Object),
             typUmowy: expect.any(Object),
             wystawca: expect.any(Object),
+            tags: expect.any(Object),
           }),
         );
       });
@@ -54,6 +55,7 @@ describe('Ogloszenie Form Service', () => {
             seniority: expect.any(Object),
             typUmowy: expect.any(Object),
             wystawca: expect.any(Object),
+            tags: expect.any(Object),
           }),
         );
       });

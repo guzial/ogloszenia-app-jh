@@ -60,11 +60,19 @@
       "relationshipType": "one-to-one"
     },
     {
+      "otherEntityField": "nazwa",
+      "otherEntityName": "wystawca",
+      "relationshipName": "wystawca",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
       "otherEntityField": "tekst",
       "otherEntityName": "tag",
-      "relationshipName": "tagi",
+      "otherEntityRelationshipName": "ogloszenie",
+      "relationshipName": "tag",
       "relationshipSide": "left",
-      "relationshipType": "one-to-many"
+      "relationshipType": "many-to-many"
     }
   ],
   "searchEngine": "no"

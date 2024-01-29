@@ -6,6 +6,8 @@ import static com.adapp.domain.TagTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.adapp.web.rest.TestUtil;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 class TagTest {
@@ -41,10 +43,20 @@ class TagTest {
         Tag tag = getTagRandomSampleGenerator();
         Ogloszenie ogloszenieBack = getOgloszenieRandomSampleGenerator();
 
-        tag.setOgloszenie(ogloszenieBack);
-        assertThat(tag.getOgloszenie()).isEqualTo(ogloszenieBack);
+        tag.addOgloszenie(ogloszenieBack);
+        assertThat(tag.getOgloszenies()).containsOnly(ogloszenieBack);
+        assertThat(ogloszenieBack.getTags()).containsOnly(tag);
 
-        tag.ogloszenie(null);
-        assertThat(tag.getOgloszenie()).isNull();
+        tag.removeOgloszenie(ogloszenieBack);
+        assertThat(tag.getOgloszenies()).doesNotContain(ogloszenieBack);
+        assertThat(ogloszenieBack.getTags()).doesNotContain(tag);
+
+        tag.ogloszenies(new HashSet<>(Set.of(ogloszenieBack)));
+        assertThat(tag.getOgloszenies()).containsOnly(ogloszenieBack);
+        assertThat(ogloszenieBack.getTags()).containsOnly(tag);
+
+        tag.setOgloszenies(new HashSet<>());
+        assertThat(tag.getOgloszenies()).doesNotContain(ogloszenieBack);
+        assertThat(ogloszenieBack.getTags()).doesNotContain(tag);
     }
 }

@@ -157,8 +157,8 @@ describe('Tag e2e test', () => {
     });
 
     it('should create an instance of Tag', () => {
-      cy.get(`[data-cy="tekst"]`).type('clean cheerfully boastfully');
-      cy.get(`[data-cy="tekst"]`).should('have.value', 'clean cheerfully boastfully');
+      cy.get(`[data-cy="tekst"]`).type('drat');
+      cy.get(`[data-cy="tekst"]`).should('have.value', 'drat');
 
       cy.get(entityCreateSaveButtonSelector).click();
 

@@ -64,14 +64,19 @@ public class Ogloszenie implements Serializable {
     @JoinColumn(unique = true)
     private TypUmowy typUmowy;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ogloszenie")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "grupaTagow", "ogloszenie" }, allowSetters = true)
-    private Set<Tag> tagis = new HashSet<>();
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "ogloszenias" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user" }, allowSetters = true)
     private Wystawca wystawca;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "rel_ogloszenie__tag",
+        joinColumns = @JoinColumn(name = "ogloszenie_id"),
+        inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "grupaTagow", "ogloszenies" }, allowSetters = true)
+    private Set<Tag> tags = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -231,37 +236,6 @@ public class Ogloszenie implements Serializable {
         return this;
     }
 
-    public Set<Tag> getTagis() {
-        return this.tagis;
-    }
-
-    public void setTagis(Set<Tag> tags) {
-        if (this.tagis != null) {
-            this.tagis.forEach(i -> i.setOgloszenie(null));
-        }
-        if (tags != null) {
-            tags.forEach(i -> i.setOgloszenie(this));
-        }
-        this.tagis = tags;
-    }
-
-    public Ogloszenie tagis(Set<Tag> tags) {
-        this.setTagis(tags);
-        return this;
-    }
-
-    public Ogloszenie addTagi(Tag tag) {
-        this.tagis.add(tag);
-        tag.setOgloszenie(this);
-        return this;
-    }
-
-    public Ogloszenie removeTagi(Tag tag) {
-        this.tagis.remove(tag);
-        tag.setOgloszenie(null);
-        return this;
-    }
-
     public Wystawca getWystawca() {
         return this.wystawca;
     }
@@ -272,6 +246,29 @@ public class Ogloszenie implements Serializable {
 
     public Ogloszenie wystawca(Wystawca wystawca) {
         this.setWystawca(wystawca);
+        return this;
+    }
+
+    public Set<Tag> getTags() {
+        return this.tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public Ogloszenie tags(Set<Tag> tags) {
+        this.setTags(tags);
+        return this;
+    }
+
+    public Ogloszenie addTag(Tag tag) {
+        this.tags.add(tag);
+        return this;
+    }
+
+    public Ogloszenie removeTag(Tag tag) {
+        this.tags.remove(tag);
         return this;
     }
 

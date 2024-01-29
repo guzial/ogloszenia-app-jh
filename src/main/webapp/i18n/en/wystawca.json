@@ -20,7 +20,7 @@
       "id": "ID",
       "nazwa": "Nazwa",
       "kontakt": "Kontakt",
-      "ogloszenia": "Ogloszenia"
+      "user": "User"
     }
   }
 }

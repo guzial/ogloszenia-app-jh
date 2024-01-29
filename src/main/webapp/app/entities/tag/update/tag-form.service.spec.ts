@@ -22,7 +22,6 @@ describe('Tag Form Service', () => {
             id: expect.any(Object),
             tekst: expect.any(Object),
             grupaTagow: expect.any(Object),
-            ogloszenie: expect.any(Object),
           }),
         );
       });
@@ -35,7 +34,6 @@ describe('Tag Form Service', () => {
             id: expect.any(Object),
             tekst: expect.any(Object),
             grupaTagow: expect.any(Object),
-            ogloszenie: expect.any(Object),
           }),
         );
       });

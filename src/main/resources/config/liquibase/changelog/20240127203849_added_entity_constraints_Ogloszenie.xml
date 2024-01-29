@@ -28,5 +28,19 @@
                                  referencedColumnNames="id"
                                  referencedTableName="wystawca"
                                  />
+
+        <addForeignKeyConstraint baseColumnNames="ogloszenie_id"
+                                 baseTableName="rel_ogloszenie__tag"
+                                 constraintName="fk_rel_ogloszenie__tag__ogloszenie_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ogloszenie"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="tag_id"
+                                 baseTableName="rel_ogloszenie__tag"
+                                 constraintName="fk_rel_ogloszenie__tag__tag_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tag"
+                                 />
     </changeSet>
 </databaseChangeLog>

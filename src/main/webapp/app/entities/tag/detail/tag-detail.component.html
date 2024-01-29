@@ -27,14 +27,6 @@
               </div>
             }
           </dd>
-          <dt><span jhiTranslate="ogloszeniaApp.tag.ogloszenie">Ogloszenie</span></dt>
-          <dd>
-            @if (tag.ogloszenie) {
-              <div>
-                <a [routerLink]="['/ogloszenie', tag.ogloszenie.id, 'view']">{{ tag.ogloszenie.id }}</a>
-              </div>
-            }
-          </dd>
         </dl>
 
         <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

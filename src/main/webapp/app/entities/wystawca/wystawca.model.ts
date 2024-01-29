@@ -1,10 +1,10 @@
-import { IOgloszenie } from 'app/entities/ogloszenie/ogloszenie.model';
+import { IUser } from 'app/entities/user/user.model';
 
 export interface IWystawca {
   id: number;
   nazwa?: string | null;
   kontakt?: string | null;
-  ogloszenias?: IOgloszenie[] | null;
+  user?: Pick<IUser, 'id' | 'login'> | null;
 }
 
 export type NewWystawca = Omit<IWystawca, 'id'> & { id: null };

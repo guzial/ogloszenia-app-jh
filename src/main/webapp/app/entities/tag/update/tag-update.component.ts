@@ -9,10 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IGrupaTagow } from 'app/entities/grupa-tagow/grupa-tagow.model';
 import { GrupaTagowService } from 'app/entities/grupa-tagow/service/grupa-tagow.service';
-import { IOgloszenie } from 'app/entities/ogloszenie/ogloszenie.model';
-import { OgloszenieService } from 'app/entities/ogloszenie/service/ogloszenie.service';
-import { TagService } from '../service/tag.service';
 import { ITag } from '../tag.model';
+import { TagService } from '../service/tag.service';
 import { TagFormService, TagFormGroup } from './tag-form.service';
 
 @Component({
@@ -26,7 +24,6 @@ export class TagUpdateComponent implements OnInit {
   tag: ITag | null = null;
 
   grupaTagowsCollection: IGrupaTagow[] = [];
-  ogloszeniesSharedCollection: IOgloszenie[] = [];
 
   editForm: TagFormGroup = this.tagFormService.createTagFormGroup();
 
@@ -34,13 +31,10 @@ export class TagUpdateComponent implements OnInit {
     protected tagService: TagService,
     protected tagFormService: TagFormService,
     protected grupaTagowService: GrupaTagowService,
-    protected ogloszenieService: OgloszenieService,
     protected activatedRoute: ActivatedRoute,
   ) {}
 
   compareGrupaTagow = (o1: IGrupaTagow | null, o2: IGrupaTagow | null): boolean => this.grupaTagowService.compareGrupaTagow(o1, o2);
-
-  compareOgloszenie = (o1: IOgloszenie | null, o2: IOgloszenie | null): boolean => this.ogloszenieService.compareOgloszenie(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ tag }) => {
@@ -94,10 +88,6 @@ export class TagUpdateComponent implements OnInit {
       this.grupaTagowsCollection,
       tag.grupaTagow,
     );
-    this.ogloszeniesSharedCollection = this.ogloszenieService.addOgloszenieToCollectionIfMissing<IOgloszenie>(
-      this.ogloszeniesSharedCollection,
-      tag.ogloszenie,
-    );
   }
 
   protected loadRelationshipsOptions(): void {
@@ -110,15 +100,5 @@ export class TagUpdateComponent implements OnInit {
         ),
       )
       .subscribe((grupaTagows: IGrupaTagow[]) => (this.grupaTagowsCollection = grupaTagows));
-
-    this.ogloszenieService
-      .query()
-      .pipe(map((res: HttpResponse<IOgloszenie[]>) => res.body ?? []))
-      .pipe(
-        map((ogloszenies: IOgloszenie[]) =>
-          this.ogloszenieService.addOgloszenieToCollectionIfMissing<IOgloszenie>(ogloszenies, this.tag?.ogloszenie),
-        ),
-      )
-      .subscribe((ogloszenies: IOgloszenie[]) => (this.ogloszeniesSharedCollection = ogloszenies));
   }
 }

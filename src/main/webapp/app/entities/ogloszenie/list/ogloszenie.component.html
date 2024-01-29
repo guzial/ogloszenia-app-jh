@@ -117,7 +117,7 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="wystawca.id">
+            <th scope="col" jhiSortBy="wystawca.nazwa">
               <div class="d-flex">
                 <span jhiTranslate="ogloszeniaApp.ogloszenie.wystawca">Wystawca</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -163,7 +163,7 @@
               <td>
                 @if (ogloszenie.wystawca) {
                   <div>
-                    <a [routerLink]="['/wystawca', ogloszenie.wystawca.id, 'view']">{{ ogloszenie.wystawca.id }}</a>
+                    <a [routerLink]="['/wystawca', ogloszenie.wystawca.id, 'view']">{{ ogloszenie.wystawca.nazwa }}</a>
                   </div>
                 }
               </td>

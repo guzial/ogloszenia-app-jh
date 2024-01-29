@@ -26,7 +26,7 @@ public class TypUmowy implements Serializable {
     @Column(name = "tekst")
     private String tekst;
 
-    @JsonIgnoreProperties(value = { "seniority", "typUmowy", "tagis", "wystawca" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "seniority", "typUmowy", "wystawca", "tags" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "typUmowy")
     private Ogloszenie ogloszenie;
 

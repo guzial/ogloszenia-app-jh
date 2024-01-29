@@ -1,10 +1,7 @@
 package com.adapp.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -31,10 +28,8 @@ public class Wystawca implements Serializable {
     @Column(name = "kontakt")
     private String kontakt;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "wystawca")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "seniority", "typUmowy", "tagis", "wystawca" }, allowSetters = true)
-    private Set<Ogloszenie> ogloszenias = new HashSet<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -77,34 +72,16 @@ public class Wystawca implements Serializable {
         this.kontakt = kontakt;
     }
 
-    public Set<Ogloszenie> getOgloszenias() {
-        return this.ogloszenias;
+    public User getUser() {
+        return this.user;
     }
 
-    public void setOgloszenias(Set<Ogloszenie> ogloszenies) {
-        if (this.ogloszenias != null) {
-            this.ogloszenias.forEach(i -> i.setWystawca(null));
-        }
-        if (ogloszenies != null) {
-            ogloszenies.forEach(i -> i.setWystawca(this));
-        }
-        this.ogloszenias = ogloszenies;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Wystawca ogloszenias(Set<Ogloszenie> ogloszenies) {
-        this.setOgloszenias(ogloszenies);
-        return this;
-    }
-
-    public Wystawca addOgloszenia(Ogloszenie ogloszenie) {
-        this.ogloszenias.add(ogloszenie);
-        ogloszenie.setWystawca(this);
-        return this;
-    }
-
-    public Wystawca removeOgloszenia(Ogloszenie ogloszenie) {
-        this.ogloszenias.remove(ogloszenie);
-        ogloszenie.setWystawca(null);
+    public Wystawca user(User user) {
+        this.setUser(user);
         return this;
     }
 

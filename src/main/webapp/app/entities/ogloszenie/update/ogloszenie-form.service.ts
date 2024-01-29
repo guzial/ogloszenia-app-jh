@@ -29,7 +29,7 @@ type OgloszenieFormRawValue = FormValueOf<IOgloszenie>;
 
 type NewOgloszenieFormRawValue = FormValueOf<NewOgloszenie>;
 
-type OgloszenieFormDefaults = Pick<NewOgloszenie, 'id' | 'dataPublikacji' | 'dataWaznosci' | 'startOd' | 'czyWidelki' | 'aktywne'>;
+type OgloszenieFormDefaults = Pick<NewOgloszenie, 'id' | 'dataPublikacji' | 'dataWaznosci' | 'startOd' | 'czyWidelki' | 'aktywne' | 'tags'>;
 
 type OgloszenieFormGroupContent = {
   id: FormControl<OgloszenieFormRawValue['id'] | NewOgloszenie['id']>;
@@ -45,6 +45,7 @@ type OgloszenieFormGroupContent = {
   seniority: FormControl<OgloszenieFormRawValue['seniority']>;
   typUmowy: FormControl<OgloszenieFormRawValue['typUmowy']>;
   wystawca: FormControl<OgloszenieFormRawValue['wystawca']>;
+  tags: FormControl<OgloszenieFormRawValue['tags']>;
 };
 
 export type OgloszenieFormGroup = FormGroup<OgloszenieFormGroupContent>;
@@ -76,6 +77,7 @@ export class OgloszenieFormService {
       seniority: new FormControl(ogloszenieRawValue.seniority),
       typUmowy: new FormControl(ogloszenieRawValue.typUmowy),
       wystawca: new FormControl(ogloszenieRawValue.wystawca),
+      tags: new FormControl(ogloszenieRawValue.tags ?? []),
     });
   }
 
@@ -103,6 +105,7 @@ export class OgloszenieFormService {
       startOd: currentTime,
       czyWidelki: false,
       aktywne: false,
+      tags: [],
     };
   }
 
@@ -125,6 +128,7 @@ export class OgloszenieFormService {
       dataPublikacji: ogloszenie.dataPublikacji ? ogloszenie.dataPublikacji.format(DATE_TIME_FORMAT) : undefined,
       dataWaznosci: ogloszenie.dataWaznosci ? ogloszenie.dataWaznosci.format(DATE_TIME_FORMAT) : undefined,
       startOd: ogloszenie.startOd ? ogloszenie.startOd.format(DATE_TIME_FORMAT) : undefined,
+      tags: ogloszenie.tags ?? [],
     };
   }
 }

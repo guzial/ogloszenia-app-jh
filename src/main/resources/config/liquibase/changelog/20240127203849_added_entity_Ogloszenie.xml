@@ -57,6 +57,20 @@
         <dropDefaultValue tableName="ogloszenie" columnName="start_od" columnDataType="${datetimeType}"/>
     </changeSet>
 
+    <changeSet id="20240127203849-1-relations" author="jhipster">
+
+        <createTable tableName="rel_ogloszenie__tag">
+            <column name="tag_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ogloszenie_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="ogloszenie_id, tag_id" tableName="rel_ogloszenie__tag"/>
+    </changeSet>
+
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
 
     <!--

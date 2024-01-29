@@ -11,32 +11,37 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Spring Data JPA repository for the Ogloszenie entity.
+ *
+ * When extending this class, extend OgloszenieRepositoryWithBagRelationships too.
+ * For more information refer to https://github.com/jhipster/generator-jhipster/issues/17990.
  */
 @Repository
-public interface OgloszenieRepository extends JpaRepository<Ogloszenie, Long> {
+public interface OgloszenieRepository extends OgloszenieRepositoryWithBagRelationships, JpaRepository<Ogloszenie, Long> {
     default Optional<Ogloszenie> findOneWithEagerRelationships(Long id) {
-        return this.findOneWithToOneRelationships(id);
+        return this.fetchBagRelationships(this.findOneWithToOneRelationships(id));
     }
 
     default List<Ogloszenie> findAllWithEagerRelationships() {
-        return this.findAllWithToOneRelationships();
+        return this.fetchBagRelationships(this.findAllWithToOneRelationships());
     }
 
     default Page<Ogloszenie> findAllWithEagerRelationships(Pageable pageable) {
-        return this.findAllWithToOneRelationships(pageable);
+        return this.fetchBagRelationships(this.findAllWithToOneRelationships(pageable));
     }
 
     @Query(
-        value = "select ogloszenie from Ogloszenie ogloszenie left join fetch ogloszenie.seniority left join fetch ogloszenie.typUmowy",
+        value = "select ogloszenie from Ogloszenie ogloszenie left join fetch ogloszenie.seniority left join fetch ogloszenie.typUmowy left join fetch ogloszenie.wystawca",
         countQuery = "select count(ogloszenie) from Ogloszenie ogloszenie"
     )
     Page<Ogloszenie> findAllWithToOneRelationships(Pageable pageable);
 
-    @Query("select ogloszenie from Ogloszenie ogloszenie left join fetch ogloszenie.seniority left join fetch ogloszenie.typUmowy")
+    @Query(
+        "select ogloszenie from Ogloszenie ogloszenie left join fetch ogloszenie.seniority left join fetch ogloszenie.typUmowy left join fetch ogloszenie.wystawca"
+    )
     List<Ogloszenie> findAllWithToOneRelationships();
 
     @Query(
-        "select ogloszenie from Ogloszenie ogloszenie left join fetch ogloszenie.seniority left join fetch ogloszenie.typUmowy where ogloszenie.id =:id"
+        "select ogloszenie from Ogloszenie ogloszenie left join fetch ogloszenie.seniority left join fetch ogloszenie.typUmowy left join fetch ogloszenie.wystawca where ogloszenie.id =:id"
     )
     Optional<Ogloszenie> findOneWithToOneRelationships(@Param("id") Long id);
 }

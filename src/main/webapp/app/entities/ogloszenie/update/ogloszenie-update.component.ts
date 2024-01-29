@@ -13,6 +13,8 @@ import { ITypUmowy } from 'app/entities/typ-umowy/typ-umowy.model';
 import { TypUmowyService } from 'app/entities/typ-umowy/service/typ-umowy.service';
 import { IWystawca } from 'app/entities/wystawca/wystawca.model';
 import { WystawcaService } from 'app/entities/wystawca/service/wystawca.service';
+import { ITag } from 'app/entities/tag/tag.model';
+import { TagService } from 'app/entities/tag/service/tag.service';
 import { OgloszenieService } from '../service/ogloszenie.service';
 import { IOgloszenie } from '../ogloszenie.model';
 import { OgloszenieFormService, OgloszenieFormGroup } from './ogloszenie-form.service';
@@ -30,6 +32,7 @@ export class OgloszenieUpdateComponent implements OnInit {
   senioritiesCollection: ISeniority[] = [];
   typUmowiesCollection: ITypUmowy[] = [];
   wystawcasSharedCollection: IWystawca[] = [];
+  tagsSharedCollection: ITag[] = [];
 
   editForm: OgloszenieFormGroup = this.ogloszenieFormService.createOgloszenieFormGroup();
 
@@ -39,6 +42,7 @@ export class OgloszenieUpdateComponent implements OnInit {
     protected seniorityService: SeniorityService,
     protected typUmowyService: TypUmowyService,
     protected wystawcaService: WystawcaService,
+    protected tagService: TagService,
     protected activatedRoute: ActivatedRoute,
   ) {}
 
@@ -47,6 +51,8 @@ export class OgloszenieUpdateComponent implements OnInit {
   compareTypUmowy = (o1: ITypUmowy | null, o2: ITypUmowy | null): boolean => this.typUmowyService.compareTypUmowy(o1, o2);
 
   compareWystawca = (o1: IWystawca | null, o2: IWystawca | null): boolean => this.wystawcaService.compareWystawca(o1, o2);
+
+  compareTag = (o1: ITag | null, o2: ITag | null): boolean => this.tagService.compareTag(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ ogloszenie }) => {
@@ -108,6 +114,7 @@ export class OgloszenieUpdateComponent implements OnInit {
       this.wystawcasSharedCollection,
       ogloszenie.wystawca,
     );
+    this.tagsSharedCollection = this.tagService.addTagToCollectionIfMissing<ITag>(this.tagsSharedCollection, ...(ogloszenie.tags ?? []));
   }
 
   protected loadRelationshipsOptions(): void {
@@ -140,5 +147,11 @@ export class OgloszenieUpdateComponent implements OnInit {
         ),
       )
       .subscribe((wystawcas: IWystawca[]) => (this.wystawcasSharedCollection = wystawcas));
+
+    this.tagService
+      .query()
+      .pipe(map((res: HttpResponse<ITag[]>) => res.body ?? []))
+      .pipe(map((tags: ITag[]) => this.tagService.addTagToCollectionIfMissing<ITag>(tags, ...(this.ogloszenie?.tags ?? []))))
+      .subscribe((tags: ITag[]) => (this.tagsSharedCollection = tags));
   }
 }
