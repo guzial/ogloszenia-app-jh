@@ -26,7 +26,7 @@ public class GrupaTagow implements Serializable {
     @Column(name = "nazwa_grupy")
     private String nazwaGrupy;
 
-    @JsonIgnoreProperties(value = { "grupaTagow", "ogloszenie" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "grupaTagow", "ogloszenies" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "grupaTagow")
     private Tag tag;
 

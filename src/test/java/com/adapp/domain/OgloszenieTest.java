@@ -53,28 +53,6 @@ class OgloszenieTest {
     }
 
     @Test
-    void tagiTest() throws Exception {
-        Ogloszenie ogloszenie = getOgloszenieRandomSampleGenerator();
-        Tag tagBack = getTagRandomSampleGenerator();
-
-        ogloszenie.addTagi(tagBack);
-        assertThat(ogloszenie.getTagis()).containsOnly(tagBack);
-        assertThat(tagBack.getOgloszenie()).isEqualTo(ogloszenie);
-
-        ogloszenie.removeTagi(tagBack);
-        assertThat(ogloszenie.getTagis()).doesNotContain(tagBack);
-        assertThat(tagBack.getOgloszenie()).isNull();
-
-        ogloszenie.tagis(new HashSet<>(Set.of(tagBack)));
-        assertThat(ogloszenie.getTagis()).containsOnly(tagBack);
-        assertThat(tagBack.getOgloszenie()).isEqualTo(ogloszenie);
-
-        ogloszenie.setTagis(new HashSet<>());
-        assertThat(ogloszenie.getTagis()).doesNotContain(tagBack);
-        assertThat(tagBack.getOgloszenie()).isNull();
-    }
-
-    @Test
     void wystawcaTest() throws Exception {
         Ogloszenie ogloszenie = getOgloszenieRandomSampleGenerator();
         Wystawca wystawcaBack = getWystawcaRandomSampleGenerator();
@@ -84,5 +62,23 @@ class OgloszenieTest {
 
         ogloszenie.wystawca(null);
         assertThat(ogloszenie.getWystawca()).isNull();
+    }
+
+    @Test
+    void tagTest() throws Exception {
+        Ogloszenie ogloszenie = getOgloszenieRandomSampleGenerator();
+        Tag tagBack = getTagRandomSampleGenerator();
+
+        ogloszenie.addTag(tagBack);
+        assertThat(ogloszenie.getTags()).containsOnly(tagBack);
+
+        ogloszenie.removeTag(tagBack);
+        assertThat(ogloszenie.getTags()).doesNotContain(tagBack);
+
+        ogloszenie.tags(new HashSet<>(Set.of(tagBack)));
+        assertThat(ogloszenie.getTags()).containsOnly(tagBack);
+
+        ogloszenie.setTags(new HashSet<>());
+        assertThat(ogloszenie.getTags()).doesNotContain(tagBack);
     }
 }

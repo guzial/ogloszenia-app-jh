@@ -22,6 +22,7 @@ describe('Wystawca Form Service', () => {
             id: expect.any(Object),
             nazwa: expect.any(Object),
             kontakt: expect.any(Object),
+            user: expect.any(Object),
           }),
         );
       });
@@ -34,6 +35,7 @@ describe('Wystawca Form Service', () => {
             id: expect.any(Object),
             nazwa: expect.any(Object),
             kontakt: expect.any(Object),
+            user: expect.any(Object),
           }),
         );
       });

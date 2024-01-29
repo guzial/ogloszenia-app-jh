@@ -1,16 +1,17 @@
 import { ITag, NewTag } from './tag.model';
 
 export const sampleWithRequiredData: ITag = {
-  id: 28938,
+  id: 23391,
 };
 
 export const sampleWithPartialData: ITag = {
-  id: 28260,
+  id: 768,
+  tekst: 'around following',
 };
 
 export const sampleWithFullData: ITag = {
-  id: 23391,
-  tekst: 'rapidly',
+  id: 19353,
+  tekst: 'cheerfully er close',
 };
 
 export const sampleWithNewData: NewTag = {

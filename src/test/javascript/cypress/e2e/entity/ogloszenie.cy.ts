@@ -160,33 +160,33 @@ describe('Ogloszenie e2e test', () => {
     });
 
     it('should create an instance of Ogloszenie', () => {
-      cy.get(`[data-cy="tytul"]`).type('geez following justly');
-      cy.get(`[data-cy="tytul"]`).should('have.value', 'geez following justly');
+      cy.get(`[data-cy="tytul"]`).type('so');
+      cy.get(`[data-cy="tytul"]`).should('have.value', 'so');
 
-      cy.get(`[data-cy="opis"]`).type('pavilion inasmuch sternly');
-      cy.get(`[data-cy="opis"]`).should('have.value', 'pavilion inasmuch sternly');
+      cy.get(`[data-cy="opis"]`).type('blue');
+      cy.get(`[data-cy="opis"]`).should('have.value', 'blue');
 
-      cy.get(`[data-cy="dataPublikacji"]`).type('2024-01-27T18:21');
+      cy.get(`[data-cy="dataPublikacji"]`).type('2024-01-26T20:58');
       cy.get(`[data-cy="dataPublikacji"]`).blur();
-      cy.get(`[data-cy="dataPublikacji"]`).should('have.value', '2024-01-27T18:21');
+      cy.get(`[data-cy="dataPublikacji"]`).should('have.value', '2024-01-26T20:58');
 
-      cy.get(`[data-cy="dataWaznosci"]`).type('2024-01-27T02:02');
+      cy.get(`[data-cy="dataWaznosci"]`).type('2024-01-27T09:41');
       cy.get(`[data-cy="dataWaznosci"]`).blur();
-      cy.get(`[data-cy="dataWaznosci"]`).should('have.value', '2024-01-27T02:02');
+      cy.get(`[data-cy="dataWaznosci"]`).should('have.value', '2024-01-27T09:41');
 
-      cy.get(`[data-cy="startOd"]`).type('2024-01-27T14:42');
+      cy.get(`[data-cy="startOd"]`).type('2024-01-27T18:00');
       cy.get(`[data-cy="startOd"]`).blur();
-      cy.get(`[data-cy="startOd"]`).should('have.value', '2024-01-27T14:42');
+      cy.get(`[data-cy="startOd"]`).should('have.value', '2024-01-27T18:00');
 
       cy.get(`[data-cy="czyWidelki"]`).should('not.be.checked');
       cy.get(`[data-cy="czyWidelki"]`).click();
       cy.get(`[data-cy="czyWidelki"]`).should('be.checked');
 
-      cy.get(`[data-cy="widelkiMin"]`).type('18884.57');
-      cy.get(`[data-cy="widelkiMin"]`).should('have.value', '18884.57');
+      cy.get(`[data-cy="widelkiMin"]`).type('2308.43');
+      cy.get(`[data-cy="widelkiMin"]`).should('have.value', '2308.43');
 
-      cy.get(`[data-cy="widelkiMax"]`).type('28256.98');
-      cy.get(`[data-cy="widelkiMax"]`).should('have.value', '28256.98');
+      cy.get(`[data-cy="widelkiMax"]`).type('23087.59');
+      cy.get(`[data-cy="widelkiMax"]`).should('have.value', '23087.59');
 
       cy.get(`[data-cy="aktywne"]`).should('not.be.checked');
       cy.get(`[data-cy="aktywne"]`).click();

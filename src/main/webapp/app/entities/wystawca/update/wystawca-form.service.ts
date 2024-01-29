@@ -20,6 +20,7 @@ type WystawcaFormGroupContent = {
   id: FormControl<IWystawca['id'] | NewWystawca['id']>;
   nazwa: FormControl<IWystawca['nazwa']>;
   kontakt: FormControl<IWystawca['kontakt']>;
+  user: FormControl<IWystawca['user']>;
 };
 
 export type WystawcaFormGroup = FormGroup<WystawcaFormGroupContent>;
@@ -41,6 +42,7 @@ export class WystawcaFormService {
       ),
       nazwa: new FormControl(wystawcaRawValue.nazwa),
       kontakt: new FormControl(wystawcaRawValue.kontakt),
+      user: new FormControl(wystawcaRawValue.user),
     });
   }
 

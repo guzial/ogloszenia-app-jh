@@ -23,6 +23,10 @@
           <dd>
             <span>{{ wystawca.kontakt }}</span>
           </dd>
+          <dt><span jhiTranslate="ogloszeniaApp.wystawca.user">User</span></dt>
+          <dd>
+            <span>{{ wystawca.user?.login }}</span>
+          </dd>
         </dl>
 
         <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

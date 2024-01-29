@@ -24,6 +24,16 @@
           <label class="form-label" jhiTranslate="ogloszeniaApp.wystawca.kontakt" for="field_kontakt">Kontakt</label>
           <input type="text" class="form-control" name="kontakt" id="field_kontakt" data-cy="kontakt" formControlName="kontakt" />
         </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="ogloszeniaApp.wystawca.user" for="field_user">User</label>
+          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
+            <option [ngValue]="null"></option>
+            @for (userOption of usersSharedCollection; track $index) {
+              <option [ngValue]="userOption">{{ userOption.login }}</option>
+            }
+          </select>
+        </div>
       </div>
 
       <div>

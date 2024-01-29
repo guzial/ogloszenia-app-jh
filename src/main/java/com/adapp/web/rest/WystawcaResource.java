@@ -143,12 +143,17 @@ public class WystawcaResource {
     /**
      * {@code GET  /wystawcas} : get all the wystawcas.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of wystawcas in body.
      */
     @GetMapping("")
-    public List<Wystawca> getAllWystawcas() {
+    public List<Wystawca> getAllWystawcas(@RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload) {
         log.debug("REST request to get all Wystawcas");
-        return wystawcaRepository.findAll();
+        if (eagerload) {
+            return wystawcaRepository.findAllWithEagerRelationships();
+        } else {
+            return wystawcaRepository.findAll();
+        }
     }
 
     /**
@@ -160,7 +165,7 @@ public class WystawcaResource {
     @GetMapping("/{id}")
     public ResponseEntity<Wystawca> getWystawca(@PathVariable("id") Long id) {
         log.debug("REST request to get Wystawca : {}", id);
-        Optional<Wystawca> wystawca = wystawcaRepository.findById(id);
+        Optional<Wystawca> wystawca = wystawcaRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(wystawca);
     }
 

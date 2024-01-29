@@ -71,8 +71,17 @@
           <dd>
             @if (ogloszenie.wystawca) {
               <div>
-                <a [routerLink]="['/wystawca', ogloszenie.wystawca.id, 'view']">{{ ogloszenie.wystawca.id }}</a>
+                <a [routerLink]="['/wystawca', ogloszenie.wystawca.id, 'view']">{{ ogloszenie.wystawca.nazwa }}</a>
               </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="ogloszeniaApp.ogloszenie.tag">Tag</span></dt>
+          <dd>
+            @for (tag of ogloszenie.tags; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/tag', tag.id, 'view']">{{ tag.tekst }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
             }
           </dd>
         </dl>

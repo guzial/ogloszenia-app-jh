@@ -12,6 +12,8 @@ import { ITypUmowy } from 'app/entities/typ-umowy/typ-umowy.model';
 import { TypUmowyService } from 'app/entities/typ-umowy/service/typ-umowy.service';
 import { IWystawca } from 'app/entities/wystawca/wystawca.model';
 import { WystawcaService } from 'app/entities/wystawca/service/wystawca.service';
+import { ITag } from 'app/entities/tag/tag.model';
+import { TagService } from 'app/entities/tag/service/tag.service';
 import { IOgloszenie } from '../ogloszenie.model';
 import { OgloszenieService } from '../service/ogloszenie.service';
 import { OgloszenieFormService } from './ogloszenie-form.service';
@@ -27,6 +29,7 @@ describe('Ogloszenie Management Update Component', () => {
   let seniorityService: SeniorityService;
   let typUmowyService: TypUmowyService;
   let wystawcaService: WystawcaService;
+  let tagService: TagService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -51,6 +54,7 @@ describe('Ogloszenie Management Update Component', () => {
     seniorityService = TestBed.inject(SeniorityService);
     typUmowyService = TestBed.inject(TypUmowyService);
     wystawcaService = TestBed.inject(WystawcaService);
+    tagService = TestBed.inject(TagService);
 
     comp = fixture.componentInstance;
   });
@@ -114,6 +118,25 @@ describe('Ogloszenie Management Update Component', () => {
       expect(comp.wystawcasSharedCollection).toEqual(expectedCollection);
     });
 
+    it('Should call Tag query and add missing value', () => {
+      const ogloszenie: IOgloszenie = { id: 456 };
+      const tags: ITag[] = [{ id: 28938 }];
+      ogloszenie.tags = tags;
+
+      const tagCollection: ITag[] = [{ id: 21164 }];
+      jest.spyOn(tagService, 'query').mockReturnValue(of(new HttpResponse({ body: tagCollection })));
+      const additionalTags = [...tags];
+      const expectedCollection: ITag[] = [...additionalTags, ...tagCollection];
+      jest.spyOn(tagService, 'addTagToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ ogloszenie });
+      comp.ngOnInit();
+
+      expect(tagService.query).toHaveBeenCalled();
+      expect(tagService.addTagToCollectionIfMissing).toHaveBeenCalledWith(tagCollection, ...additionalTags.map(expect.objectContaining));
+      expect(comp.tagsSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should update editForm', () => {
       const ogloszenie: IOgloszenie = { id: 456 };
       const seniority: ISeniority = { id: 8805 };
@@ -122,6 +145,8 @@ describe('Ogloszenie Management Update Component', () => {
       ogloszenie.typUmowy = typUmowy;
       const wystawca: IWystawca = { id: 21040 };
       ogloszenie.wystawca = wystawca;
+      const tag: ITag = { id: 28260 };
+      ogloszenie.tags = [tag];
 
       activatedRoute.data = of({ ogloszenie });
       comp.ngOnInit();
@@ -129,6 +154,7 @@ describe('Ogloszenie Management Update Component', () => {
       expect(comp.senioritiesCollection).toContain(seniority);
       expect(comp.typUmowiesCollection).toContain(typUmowy);
       expect(comp.wystawcasSharedCollection).toContain(wystawca);
+      expect(comp.tagsSharedCollection).toContain(tag);
       expect(comp.ogloszenie).toEqual(ogloszenie);
     });
   });
@@ -229,6 +255,16 @@ describe('Ogloszenie Management Update Component', () => {
         jest.spyOn(wystawcaService, 'compareWystawca');
         comp.compareWystawca(entity, entity2);
         expect(wystawcaService.compareWystawca).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
+    describe('compareTag', () => {
+      it('Should forward to tagService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(tagService, 'compareTag');
+        comp.compareTag(entity, entity2);
+        expect(tagService.compareTag).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

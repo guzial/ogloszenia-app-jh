@@ -6,8 +6,11 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, Subject, from } from 'rxjs';
 
+import { IUser } from 'app/entities/user/user.model';
+import { UserService } from 'app/entities/user/user.service';
 import { WystawcaService } from '../service/wystawca.service';
 import { IWystawca } from '../wystawca.model';
+
 import { WystawcaFormService } from './wystawca-form.service';
 
 import { WystawcaUpdateComponent } from './wystawca-update.component';
@@ -18,6 +21,7 @@ describe('Wystawca Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let wystawcaFormService: WystawcaFormService;
   let wystawcaService: WystawcaService;
+  let userService: UserService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -39,17 +43,43 @@ describe('Wystawca Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     wystawcaFormService = TestBed.inject(WystawcaFormService);
     wystawcaService = TestBed.inject(WystawcaService);
+    userService = TestBed.inject(UserService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should update editForm', () => {
+    it('Should call User query and add missing value', () => {
       const wystawca: IWystawca = { id: 456 };
+      const user: IUser = { id: 3882 };
+      wystawca.user = user;
+
+      const userCollection: IUser[] = [{ id: 17696 }];
+      jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
+      const additionalUsers = [user];
+      const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
+      jest.spyOn(userService, 'addUserToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ wystawca });
       comp.ngOnInit();
 
+      expect(userService.query).toHaveBeenCalled();
+      expect(userService.addUserToCollectionIfMissing).toHaveBeenCalledWith(
+        userCollection,
+        ...additionalUsers.map(expect.objectContaining),
+      );
+      expect(comp.usersSharedCollection).toEqual(expectedCollection);
+    });
+
+    it('Should update editForm', () => {
+      const wystawca: IWystawca = { id: 456 };
+      const user: IUser = { id: 5313 };
+      wystawca.user = user;
+
+      activatedRoute.data = of({ wystawca });
+      comp.ngOnInit();
+
+      expect(comp.usersSharedCollection).toContain(user);
       expect(comp.wystawca).toEqual(wystawca);
     });
   });
@@ -119,6 +149,18 @@ describe('Wystawca Management Update Component', () => {
       expect(wystawcaService.update).toHaveBeenCalled();
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Compare relationships', () => {
+    describe('compareUser', () => {
+      it('Should forward to userService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(userService, 'compareUser');
+        comp.compareUser(entity, entity2);
+        expect(userService.compareUser).toHaveBeenCalledWith(entity, entity2);
+      });
     });
   });
 });

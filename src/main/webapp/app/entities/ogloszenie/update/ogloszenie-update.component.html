@@ -163,7 +163,16 @@
           >
             <option [ngValue]="null"></option>
             @for (wystawcaOption of wystawcasSharedCollection; track $index) {
-              <option [ngValue]="wystawcaOption">{{ wystawcaOption.id }}</option>
+              <option [ngValue]="wystawcaOption">{{ wystawcaOption.nazwa }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label jhiTranslate="ogloszeniaApp.ogloszenie.tag" for="field_tags">Tag</label>
+          <select class="form-control" id="field_tags" data-cy="tag" multiple name="tags" formControlName="tags" [compareWith]="compareTag">
+            @for (tagOption of tagsSharedCollection; track $index) {
+              <option [ngValue]="tagOption">{{ tagOption.tekst }}</option>
             }
           </select>
         </div>

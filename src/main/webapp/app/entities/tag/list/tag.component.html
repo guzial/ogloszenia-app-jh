@@ -55,12 +55,6 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="ogloszenie.id">
-              <div class="d-flex">
-                <span jhiTranslate="ogloszeniaApp.tag.ogloszenie">Ogloszenie</span>
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -75,13 +69,6 @@
                 @if (tag.grupaTagow) {
                   <div>
                     <a [routerLink]="['/grupa-tagow', tag.grupaTagow.id, 'view']">{{ tag.grupaTagow.nazwaGrupy }}</a>
-                  </div>
-                }
-              </td>
-              <td>
-                @if (tag.ogloszenie) {
-                  <div>
-                    <a [routerLink]="['/ogloszenie', tag.ogloszenie.id, 'view']">{{ tag.ogloszenie.id }}</a>
                   </div>
                 }
               </td>

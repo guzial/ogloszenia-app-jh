@@ -5,7 +5,7 @@ export interface ITag {
   id: number;
   tekst?: string | null;
   grupaTagow?: IGrupaTagow | null;
-  ogloszenie?: IOgloszenie | null;
+  ogloszenies?: IOgloszenie[] | null;
 }
 
 export type NewTag = Omit<ITag, 'id'> & { id: null };

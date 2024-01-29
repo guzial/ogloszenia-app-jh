@@ -20,7 +20,6 @@ type TagFormGroupContent = {
   id: FormControl<ITag['id'] | NewTag['id']>;
   tekst: FormControl<ITag['tekst']>;
   grupaTagow: FormControl<ITag['grupaTagow']>;
-  ogloszenie: FormControl<ITag['ogloszenie']>;
 };
 
 export type TagFormGroup = FormGroup<TagFormGroupContent>;
@@ -42,7 +41,6 @@ export class TagFormService {
       ),
       tekst: new FormControl(tagRawValue.tekst),
       grupaTagow: new FormControl(tagRawValue.grupaTagow),
-      ogloszenie: new FormControl(tagRawValue.ogloszenie),
     });
   }
 

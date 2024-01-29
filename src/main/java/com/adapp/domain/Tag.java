@@ -3,6 +3,8 @@ package com.adapp.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -31,9 +33,10 @@ public class Tag implements Serializable {
     @JoinColumn(unique = true)
     private GrupaTagow grupaTagow;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "seniority", "typUmowy", "tagis", "wystawca" }, allowSetters = true)
-    private Ogloszenie ogloszenie;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "seniority", "typUmowy", "wystawca", "tags" }, allowSetters = true)
+    private Set<Ogloszenie> ogloszenies = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -76,16 +79,34 @@ public class Tag implements Serializable {
         return this;
     }
 
-    public Ogloszenie getOgloszenie() {
-        return this.ogloszenie;
+    public Set<Ogloszenie> getOgloszenies() {
+        return this.ogloszenies;
     }
 
-    public void setOgloszenie(Ogloszenie ogloszenie) {
-        this.ogloszenie = ogloszenie;
+    public void setOgloszenies(Set<Ogloszenie> ogloszenies) {
+        if (this.ogloszenies != null) {
+            this.ogloszenies.forEach(i -> i.removeTag(this));
+        }
+        if (ogloszenies != null) {
+            ogloszenies.forEach(i -> i.addTag(this));
+        }
+        this.ogloszenies = ogloszenies;
     }
 
-    public Tag ogloszenie(Ogloszenie ogloszenie) {
-        this.setOgloszenie(ogloszenie);
+    public Tag ogloszenies(Set<Ogloszenie> ogloszenies) {
+        this.setOgloszenies(ogloszenies);
+        return this;
+    }
+
+    public Tag addOgloszenie(Ogloszenie ogloszenie) {
+        this.ogloszenies.add(ogloszenie);
+        ogloszenie.getTags().add(this);
+        return this;
+    }
+
+    public Tag removeOgloszenie(Ogloszenie ogloszenie) {
+        this.ogloszenies.remove(ogloszenie);
+        ogloszenie.getTags().remove(this);
         return this;
     }
 

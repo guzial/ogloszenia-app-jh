@@ -18,6 +18,13 @@
       "relationshipName": "grupaTagow",
       "relationshipSide": "left",
       "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "ogloszenie",
+      "otherEntityRelationshipName": "tag",
+      "relationshipName": "ogloszenie",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
     }
   ],
   "searchEngine": "no"
