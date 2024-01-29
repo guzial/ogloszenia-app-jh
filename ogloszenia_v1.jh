@@ -50,7 +50,7 @@ relationship OneToMany {
 }
 
 relationship OneToOne {
-  Tag{grupaTagow} to GrupaTagow
+  Tag{grupaTagow(nazwaGrupy)} to GrupaTagow
 }
 
 // Set pagination options
