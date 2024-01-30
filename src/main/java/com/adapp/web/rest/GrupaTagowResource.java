@@ -8,7 +8,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -141,18 +140,10 @@ public class GrupaTagowResource {
     /**
      * {@code GET  /grupa-tagows} : get all the grupaTagows.
      *
-     * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of grupaTagows in body.
      */
     @GetMapping("")
-    public List<GrupaTagow> getAllGrupaTagows(@RequestParam(name = "filter", required = false) String filter) {
-        if ("tag-is-null".equals(filter)) {
-            log.debug("REST request to get all GrupaTagows where tag is null");
-            return StreamSupport
-                .stream(grupaTagowRepository.findAll().spliterator(), false)
-                .filter(grupaTagow -> grupaTagow.getTag() == null)
-                .toList();
-        }
+    public List<GrupaTagow> getAllGrupaTagows() {
         log.debug("REST request to get all GrupaTagows");
         return grupaTagowRepository.findAll();
     }

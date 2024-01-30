@@ -23,7 +23,7 @@ export class TagUpdateComponent implements OnInit {
   isSaving = false;
   tag: ITag | null = null;
 
-  grupaTagowsCollection: IGrupaTagow[] = [];
+  grupaTagowsSharedCollection: IGrupaTagow[] = [];
 
   editForm: TagFormGroup = this.tagFormService.createTagFormGroup();
 
@@ -84,21 +84,21 @@ export class TagUpdateComponent implements OnInit {
     this.tag = tag;
     this.tagFormService.resetForm(this.editForm, tag);
 
-    this.grupaTagowsCollection = this.grupaTagowService.addGrupaTagowToCollectionIfMissing<IGrupaTagow>(
-      this.grupaTagowsCollection,
+    this.grupaTagowsSharedCollection = this.grupaTagowService.addGrupaTagowToCollectionIfMissing<IGrupaTagow>(
+      this.grupaTagowsSharedCollection,
       tag.grupaTagow,
     );
   }
 
   protected loadRelationshipsOptions(): void {
     this.grupaTagowService
-      .query({ filter: 'tag-is-null' })
+      .query()
       .pipe(map((res: HttpResponse<IGrupaTagow[]>) => res.body ?? []))
       .pipe(
         map((grupaTagows: IGrupaTagow[]) =>
           this.grupaTagowService.addGrupaTagowToCollectionIfMissing<IGrupaTagow>(grupaTagows, this.tag?.grupaTagow),
         ),
       )
-      .subscribe((grupaTagows: IGrupaTagow[]) => (this.grupaTagowsCollection = grupaTagows));
+      .subscribe((grupaTagows: IGrupaTagow[]) => (this.grupaTagowsSharedCollection = grupaTagows));
   }
 }

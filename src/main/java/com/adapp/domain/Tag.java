@@ -28,9 +28,7 @@ public class Tag implements Serializable {
     @Column(name = "tekst")
     private String tekst;
 
-    @JsonIgnoreProperties(value = { "tag" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(unique = true)
+    @ManyToOne(fetch = FetchType.LAZY)
     private GrupaTagow grupaTagow;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
