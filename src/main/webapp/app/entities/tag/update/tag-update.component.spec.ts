@@ -48,22 +48,26 @@ describe('Tag Management Update Component', () => {
   });
 
   describe('ngOnInit', () => {
-    it('Should call grupaTagow query and add missing value', () => {
+    it('Should call GrupaTagow query and add missing value', () => {
       const tag: ITag = { id: 456 };
       const grupaTagow: IGrupaTagow = { id: 4534 };
       tag.grupaTagow = grupaTagow;
 
       const grupaTagowCollection: IGrupaTagow[] = [{ id: 3840 }];
       jest.spyOn(grupaTagowService, 'query').mockReturnValue(of(new HttpResponse({ body: grupaTagowCollection })));
-      const expectedCollection: IGrupaTagow[] = [grupaTagow, ...grupaTagowCollection];
+      const additionalGrupaTagows = [grupaTagow];
+      const expectedCollection: IGrupaTagow[] = [...additionalGrupaTagows, ...grupaTagowCollection];
       jest.spyOn(grupaTagowService, 'addGrupaTagowToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ tag });
       comp.ngOnInit();
 
       expect(grupaTagowService.query).toHaveBeenCalled();
-      expect(grupaTagowService.addGrupaTagowToCollectionIfMissing).toHaveBeenCalledWith(grupaTagowCollection, grupaTagow);
-      expect(comp.grupaTagowsCollection).toEqual(expectedCollection);
+      expect(grupaTagowService.addGrupaTagowToCollectionIfMissing).toHaveBeenCalledWith(
+        grupaTagowCollection,
+        ...additionalGrupaTagows.map(expect.objectContaining),
+      );
+      expect(comp.grupaTagowsSharedCollection).toEqual(expectedCollection);
     });
 
     it('Should update editForm', () => {
@@ -74,7 +78,7 @@ describe('Tag Management Update Component', () => {
       activatedRoute.data = of({ tag });
       comp.ngOnInit();
 
-      expect(comp.grupaTagowsCollection).toContain(grupaTagow);
+      expect(comp.grupaTagowsSharedCollection).toContain(grupaTagow);
       expect(comp.tag).toEqual(tag);
     });
   });

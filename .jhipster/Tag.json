@@ -17,7 +17,7 @@
       "otherEntityName": "grupaTagow",
       "relationshipName": "grupaTagow",
       "relationshipSide": "left",
-      "relationshipType": "one-to-one"
+      "relationshipType": "many-to-one"
     },
     {
       "otherEntityName": "ogloszenie",

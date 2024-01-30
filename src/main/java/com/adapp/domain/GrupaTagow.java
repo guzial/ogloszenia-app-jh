@@ -1,6 +1,5 @@
 package com.adapp.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import org.hibernate.annotations.Cache;
@@ -25,10 +24,6 @@ public class GrupaTagow implements Serializable {
 
     @Column(name = "nazwa_grupy")
     private String nazwaGrupy;
-
-    @JsonIgnoreProperties(value = { "grupaTagow", "ogloszenies" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "grupaTagow")
-    private Tag tag;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -56,25 +51,6 @@ public class GrupaTagow implements Serializable {
 
     public void setNazwaGrupy(String nazwaGrupy) {
         this.nazwaGrupy = nazwaGrupy;
-    }
-
-    public Tag getTag() {
-        return this.tag;
-    }
-
-    public void setTag(Tag tag) {
-        if (this.tag != null) {
-            this.tag.setGrupaTagow(null);
-        }
-        if (tag != null) {
-            tag.setGrupaTagow(this);
-        }
-        this.tag = tag;
-    }
-
-    public GrupaTagow tag(Tag tag) {
-        this.setTag(tag);
-        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

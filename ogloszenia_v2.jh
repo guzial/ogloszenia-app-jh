@@ -49,13 +49,14 @@ relationship ManyToMany {
 //  Wystawca{ogloszenia} to Ogloszenie
 //}
 
-relationship OneToOne {
-  Tag{grupaTagow(nazwaGrupy)} to GrupaTagow
-}
+//relationship OneToOne {
+//  Tag{grupaTagow(nazwaGrupy)} to GrupaTagow
+//}
 
 relationship ManyToOne {
   Wystawca{user(login)} to User with builtInEntity
   Ogloszenie{wystawca(nazwa)} to Wystawca
+  Tag{grupaTagow(nazwaGrupy)} to GrupaTagow
 }
 
 // Set pagination options

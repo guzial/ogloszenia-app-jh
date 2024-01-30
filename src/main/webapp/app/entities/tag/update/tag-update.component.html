@@ -31,7 +31,7 @@
             [compareWith]="compareGrupaTagow"
           >
             <option [ngValue]="null"></option>
-            @for (grupaTagowOption of grupaTagowsCollection; track $index) {
+            @for (grupaTagowOption of grupaTagowsSharedCollection; track $index) {
               <option [ngValue]="grupaTagowOption">{{ grupaTagowOption.nazwaGrupy }}</option>
             }
           </select>

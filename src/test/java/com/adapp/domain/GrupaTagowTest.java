@@ -1,7 +1,6 @@
 package com.adapp.domain;
 
 import static com.adapp.domain.GrupaTagowTestSamples.*;
-import static com.adapp.domain.TagTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.adapp.web.rest.TestUtil;
@@ -21,19 +20,5 @@ class GrupaTagowTest {
 
         grupaTagow2 = getGrupaTagowSample2();
         assertThat(grupaTagow1).isNotEqualTo(grupaTagow2);
-    }
-
-    @Test
-    void tagTest() throws Exception {
-        GrupaTagow grupaTagow = getGrupaTagowRandomSampleGenerator();
-        Tag tagBack = getTagRandomSampleGenerator();
-
-        grupaTagow.setTag(tagBack);
-        assertThat(grupaTagow.getTag()).isEqualTo(tagBack);
-        assertThat(tagBack.getGrupaTagow()).isEqualTo(grupaTagow);
-
-        grupaTagow.tag(null);
-        assertThat(grupaTagow.getTag()).isNull();
-        assertThat(tagBack.getGrupaTagow()).isNull();
     }
 }
